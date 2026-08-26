@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
+  <title>TRaIL-Odom: Tightly Coupled Continuous Time Radar-IMU-LiDAR Odometry with Adaptive Doppler Weighting | RA-L 2026</title>
+  <meta name="title" content="TRaIL-Odom: Tightly Coupled Continuous Time Radar-IMU-LiDAR Odometry with Adaptive Doppler Weighting">
+  <meta name="description" content="TRaIL-Odom is a tightly coupled Radar-IMU-LiDAR odometry framework with degeneracy-aware per-point and scan-wise adaptive Doppler reweighting.">
+  <meta name="keywords" content="TRaIL-Odom, radar-LiDAR odometry, Radar-IMU-LiDAR, Doppler reweighting, geometric degeneracy, SLAM, robotics">
+  <meta name="author" content="Chiyun Noh, Turcan Tuna, William Talbot, Marco Hutter, Laurent Kneip, and Ayoung Kim">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Seoul National University RPM Robotics Lab">
+  <meta property="og:title" content="TRaIL-Odom: Tightly Coupled Continuous Time Radar-IMU-LiDAR Odometry with Adaptive Doppler Weighting">
+  <meta property="og:description" content="Tightly coupled Radar-IMU-LiDAR odometry with degeneracy-aware adaptive Doppler reweighting.">
+  <meta property="og:url" content="https://chiyunnoh.github.io/TRaIL-Odom/">
+  <meta property="og:image" content="https://chiyunnoh.github.io/TRaIL-Odom/static/images/dataset_platform.png">
+  <meta property="og:image:alt" content="TRaIL-Odom dataset platform and evaluation environment">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TRaIL-Odom: Tightly Coupled Continuous Time Radar-IMU-LiDAR Odometry with Adaptive Doppler Weighting">
+  <meta name="twitter:description" content="Tightly coupled Radar-IMU-LiDAR odometry with degeneracy-aware adaptive Doppler reweighting.">
+  <meta name="twitter:image" content="https://chiyunnoh.github.io/TRaIL-Odom/static/images/dataset_platform.png">
+
+  <meta name="citation_title" content="TRaIL-Odom: Tightly Coupled Continuous Time Radar-IMU-LiDAR Odometry with Adaptive Doppler Weighting">
+  <meta name="citation_author" content="Noh, Chiyun">
+  <meta name="citation_author" content="Tuna, Turcan">
+  <meta name="citation_author" content="Talbot, William">
+  <meta name="citation_author" content="Hutter, Marco">
+  <meta name="citation_author" content="Kneip, Laurent">
+  <meta name="citation_author" content="Kim, Ayoung">
+  <meta name="citation_publication_date" content="2026">
+  <meta name="citation_journal_title" content="IEEE Robotics and Automation Letters">
+  <meta name="theme-color" content="#f5f5f7">
+
+  <link rel="icon" type="image/png" href="static/images/trail-odom-icon.png?v=20260826-blue1">
+  <link rel="apple-touch-icon" href="static/images/trail-odom-icon.png?v=20260826-blue1">
+
+  <link rel="preload" href="static/fonts/SourceSans3-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="static/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="static/css/index.css?v=20260826-cleanup2">
+
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/index.js?v=20260826-cleanup2"></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "TRaIL-Odom: Tightly Coupled Continuous Time Radar-IMU-LiDAR Odometry with Adaptive Doppler Weighting",
+    "description": "TRaIL-Odom is a tightly coupled Radar-IMU-LiDAR odometry framework with degeneracy-aware per-point and scan-wise adaptive Doppler reweighting.",
+    "author": [
+      {"@type": "Person", "name": "Chiyun Noh"},
+      {"@type": "Person", "name": "Turcan Tuna"},
+      {"@type": "Person", "name": "William Talbot"},
+      {"@type": "Person", "name": "Marco Hutter"},
+      {"@type": "Person", "name": "Laurent Kneip"},
+      {"@type": "Person", "name": "Ayoung Kim"}
+    ],
+    "datePublished": "2026",
+    "publisher": {"@type": "Organization", "name": "IEEE Robotics and Automation Letters"},
+    "url": "https://chiyunnoh.github.io/TRaIL-Odom/",
+    "image": "https://chiyunnoh.github.io/TRaIL-Odom/static/images/dataset_platform.png",
+    "keywords": ["radar-LiDAR odometry", "Radar-IMU-LiDAR", "Doppler reweighting", "geometric degeneracy", "SLAM"],
+    "isAccessibleForFree": true
+  }
+  </script>
+</head>
+
+<body>
+  <div class="progress-bar"></div>
+
+  <nav class="nav" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a class="nav-brand" href="#top">
+        <img class="brand-icon" src="static/images/trail-odom-icon.png" alt="" aria-hidden="true">
+        TRaIL-Odom
+      </a>
+      <div class="nav-links">
+        <a href="#abstract">Abstract</a>
+        <a href="#method">Method</a>
+        <a href="#dataset">Dataset</a>
+        <a href="#results">Results</a>
+        <a href="#BibTeX">BibTeX</a>
+      </div>
+      <div class="more-works-container">
+        <button class="more-works-btn" onclick="toggleMoreWorks()" title="View related works" type="button">
+          <i class="fas fa-flask"></i>
+          <span>Related Works</span>
+          <i class="fas fa-chevron-down dropdown-arrow"></i>
+        </button>
+        <div class="more-works-dropdown" id="moreWorksDropdown">
+          <div class="dropdown-header">
+            <h4>More Related Works</h4>
+            <button class="close-btn" onclick="toggleMoreWorks()" type="button" aria-label="Close related works">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="works-list">
+            <a href="https://arxiv.org/abs/2502.07703" class="work-item" target="_blank" rel="noopener">
+              <div class="work-info">
+                <h5>GaRLIO: Gravity enhanced Radar-LiDAR-Inertial Odometry</h5>
+                <p>Chiyun Noh, Wooseong Yang, Minwoo Jung, Sangwoo Jung, and Ayoung Kim</p>
+                <span class="work-venue">ICRA 2025</span>
+              </div>
+              <i class="fas fa-external-link-alt"></i>
+            </a>
+            <a href="https://garlileo.github.io/GaRLILEO/" class="work-item" target="_blank" rel="noopener">
+              <div class="work-info">
+                <h5>GaRLILEO: Gravity-aligned Radar-Leg-Inertial Enhanced Odometry</h5>
+                <p>Chiyun Noh, Sangwoo Jung, Hanjun Kim, et al.</p>
+                <span class="work-venue">IJRR 2026</span>
+              </div>
+              <i class="fas fa-external-link-alt"></i>
+            </a>
+            <a href="https://arxiv.org/abs/2504.18500" class="work-item" target="_blank" rel="noopener">
+              <div class="work-info">
+                <h5>Boxi: Design Decisions in the Context of Algorithmic Performance for Robotics</h5>
+                <p>Jonas Frey, Turcan Tuna, Lanke Frank Tarimo Fu, et al.</p>
+                <span class="work-venue">RSS 2025</span>
+              </div>
+              <i class="fas fa-external-link-alt"></i>
+            </a>
+            <a href="https://grand-tour.leggedrobotics.com/" class="work-item" target="_blank" rel="noopener">
+              <div class="work-info">
+                <h5>GrandTour: A Legged Robotics Dataset in the Wild for Multi-Modal Perception and State Estimation</h5>
+                <p>Turcan Tuna, Jonas Frey, Frank Fu, et al.</p>
+                <span class="work-venue">IJRR 2026</span>
+              </div>
+              <i class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main-content">
+    <header class="hero publication-header" id="top">
+      <div class="hero-bg"></div>
+      <div class="wrap">
+        <div class="hero-meta reveal" style="--d:40ms">
+          <div class="hero-badge"><span class="dot"></span>RA-L 2026</div>
+          <div class="hero-domain">RADAR &middot; IMU &middot; LiDAR</div>
+        </div>
+
+        <h1 class="publication-title reveal" style="--d:80ms">
+          <span class="title-accent">TRaIL-Odom</span><br>
+          <span class="title-tail">Tightly Coupled Continuous Time Radar-IMU-LiDAR Odometry with Adaptive Doppler Weighting</span>
+        </h1>
+
+        <p class="authors reveal" style="--d:180ms">
+          <a href="https://chiyunnoh.github.io/" target="_blank" rel="noopener">Chiyun Noh</a><sup>1</sup>,
+          <a href="https://www.turcantuna.com/" target="_blank" rel="noopener">Turcan Tuna</a><sup>2</sup>,
+          <a href="https://scholar.google.com/citations?user=ODqL7LoAAAAJ&amp;hl=en" target="_blank" rel="noopener">William Talbot</a><sup>2</sup>,
+          <a href="https://rsl.ethz.ch/" target="_blank" rel="noopener">Marco Hutter</a><sup>2</sup>,
+          <a href="https://scholar.google.com/citations?user=lTmh1e0AAAAJ&amp;hl=en" target="_blank" rel="noopener">Laurent Kneip</a><sup>3*</sup>,
+          <a href="https://ayoungk.github.io/" target="_blank" rel="noopener">Ayoung Kim</a><sup>1*</sup>
+        </p>
+        <p class="affils reveal" style="--d:220ms">
+          <sup>1</sup>Seoul National University &nbsp;·&nbsp; <sup>2</sup>ETH Z&uuml;rich &nbsp;·&nbsp; <sup>3</sup>Robotics and AI Institute
+        </p>
+        <p class="author-note reveal" style="--d:240ms"><sup>*</sup>Corresponding authors</p>
+
+        <div class="btn-row reveal" style="--d:280ms">
+          <a class="btn btn--primary" href="#top">
+            <i class="fas fa-file-pdf"></i>
+            Paper
+          </a>
+          <a class="btn" href="#top">
+            <i class="fab fa-github"></i>
+            Code
+          </a>
+          <a class="btn" href="#top">
+            <i class="fab fa-youtube"></i>
+            Video
+          </a>
+          <a class="btn" href="#top">
+            <i class="fas fa-database"></i>
+            Data
+          </a>
+          <a class="btn" href="#BibTeX">
+            <i class="fas fa-quote-right"></i>
+            BibTeX
+          </a>
+        </div>
+
+      </div>
+    </header>
+
+    <section class="section section--tint" id="abstract">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2 class="eyebrow">Abstract</h2>
+        </div>
+        <div class="publication-body publication-body--wide reveal">
+          <p>
+            Existing radar-LiDAR fusion methods rely on fixed residual weights, even though the informativeness of radar Doppler and LiDAR geometry is scan- and direction-dependent, leading to uniform radar weighting that misallocates Doppler information across translational directions.
+          </p>
+          <p>
+            To address this limitation, we propose two degeneracy-aware Doppler reweighting modules within a tightly coupled Radar-IMU-LiDAR odometry framework: per-point radar reweighting and scan-wise radar gain scheduling. Since geometric degeneracy is directional, we first identify weak translational directions from the LiDAR geometry and reweight individual radar Doppler constraints based on their alignment with the weak subspace. We further adjust the overall radar contribution using LiDAR geometric anisotropy such that radar is emphasized when LiDAR observability is poor and suppressed when LiDAR constraints are already reliable. Across 13 evaluated sequences, TRaIL-Odom achieves state-of-the-art overall performance, with clear advantages in geometrically degenerate scenes. In ablation experiments on three degenerate sequences, combining the two adaptive weighting modules reduces RMSE ATE and RTE by 86.0% and 78.5% relative to the fixed-weight baseline.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="method">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2 class="eyebrow">Method</h2>
+        </div>
+
+        <div class="steps">
+          <article class="step-card reveal" style="--d:0ms">
+            <div class="step-no">1</div>
+            <h3>Robust Radar-IMU-LiDAR Odometry Across Diverse Environments</h3>
+            <p>Fuses asynchronous radar Doppler, IMU, and LiDAR measurements in a continuous-time B-spline optimization framework for robust odometry across diverse real-world environments.</p>
+          </article>
+          <article class="step-card reveal" style="--d:90ms">
+            <div class="step-no">2</div>
+            <h3>Degeneracy-Aware Per-Point Reweighting</h3>
+            <p>Identifies weak translational directions from LiDAR geometry and reallocates individual radar Doppler constraints toward the weak subspace while limiting influence along well-constrained directions.</p>
+          </article>
+          <article class="step-card reveal" style="--d:180ms">
+            <div class="step-no">3</div>
+            <h3>Scan-Wise Radar Gain Scheduling</h3>
+            <p>Adjusts the overall Doppler contribution using LiDAR point-cloud anisotropy, emphasizing radar under severe degeneracy and suppressing unnecessary influence in well-constrained scans.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tint" id="dataset">
+      <div class="wrap dataset-content">
+        <div class="section-head reveal">
+          <h2 class="eyebrow">Public Dataset</h2>
+          <p class="lede">We release a real-world multi-sensor dataset designed to evaluate odometry under <strong class="lede-emphasis">geometrically degenerate conditions</strong>.</p>
+        </div>
+
+        <div class="dataset-overview">
+          <figure class="figure-card dataset-gallery-card reveal">
+            <div class="dataset-image-grid">
+              <div class="dataset-image-tile">
+                <span class="dataset-image-kind">Platform</span>
+                <img src="static/images/boxi-radar.webp" alt="ANYmal-based Boxi platform equipped with radar" loading="lazy" decoding="async">
+              </div>
+              <div class="dataset-image-tile">
+                <span class="dataset-image-kind">Environment</span>
+                <img src="static/images/park.webp" alt="Park environment in the in-house dataset" loading="lazy" decoding="async">
+              </div>
+              <div class="dataset-image-tile">
+                <span class="dataset-image-kind">Environment</span>
+                <img src="static/images/airfield.webp" alt="Airfield environment in the in-house dataset" loading="lazy" decoding="async">
+              </div>
+              <div class="dataset-image-tile">
+                <span class="dataset-image-kind">Environment</span>
+                <img src="static/images/biketunnel.webp" alt="BikeTunnel environment in the in-house dataset" loading="lazy" decoding="async">
+              </div>
+            </div>
+            <figcaption><b>Dataset platform and environments.</b> The ANYmal-based Boxi platform integrates the radar and multi-sensor suite. The in-house dataset covers Park, Airfield, and BikeTunnel environments.</figcaption>
+          </figure>
+
+          <aside class="dataset-summary reveal" style="--d:70ms">
+            <div class="dataset-stats" aria-label="Dataset summary">
+              <div><strong>6</strong><span>Sequences</span></div>
+              <div><strong>3</strong><span>Environments</span></div>
+            </div>
+            <h3>Built for geometric degeneracy</h3>
+            <p>The release covers tunnel-like and open environments where LiDAR geometry becomes weak, together with accurate position ground truth.</p>
+            <dl class="sensor-list">
+              <div><dt>Platform</dt><dd>ANYmal + Boxi</dd></div>
+              <div><dt>Sensor suite</dt><dd>1 radar · 2 LiDARs · 10 RGB cameras · 7 IMUs</dd></div>
+              <div><dt>Evaluation sensors</dt><dd>Livox Mid-360 · Honeywell HG4930 · D3 RS-1843AOPU</dd></div>
+              <div><dt>Ground truth</dt><dd>Leica MS60 + GRZ101 360° Mini Prism</dd></div>
+            </dl>
+            <a class="btn btn--primary" href="#top">
+              <i class="fas fa-database"></i>
+              Dataset &amp; Code
+            </a>
+          </aside>
+        </div>
+
+        <div class="environment-cards">
+          <article class="environment-card reveal" style="--d:0ms">
+            <div class="environment-card-head">
+              <span class="environment-index">01</span>
+              <h3>BikeTunnel</h3>
+            </div>
+            <p>Long, repetitive tunnel geometry with limited translational constraints.</p>
+            <dl class="sequence-list">
+              <div><dt>BikeTunnel1</dt><dd>360.34 m</dd></div>
+              <div><dt>BikeTunnel2</dt><dd>153.84 m</dd></div>
+            </dl>
+          </article>
+          <article class="environment-card reveal" style="--d:70ms">
+            <div class="environment-card-head">
+              <span class="environment-index">02</span>
+              <h3>Park</h3>
+            </div>
+            <p>Open park scenes with sparse structures and weak geometric observability.</p>
+            <dl class="sequence-list">
+              <div><dt>Park1</dt><dd>159.60 m</dd></div>
+              <div><dt>Park2</dt><dd>265.17 m</dd></div>
+            </dl>
+          </article>
+          <article class="environment-card reveal" style="--d:140ms">
+            <div class="environment-card-head">
+              <span class="environment-index">03</span>
+              <h3>Airfield</h3>
+            </div>
+            <p>Open-field trajectories with sparse and distant geometric features.</p>
+            <dl class="sequence-list">
+              <div><dt>Airfield1</dt><dd>198.98 m</dd></div>
+              <div><dt>Airfield2</dt><dd>208.65 m</dd></div>
+            </dl>
+          </article>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="section" id="results">
+      <div class="wrap results-content">
+        <div class="section-head reveal">
+          <h2 class="eyebrow">Results</h2>
+        </div>
+
+        <div class="benchmark-block reveal">
+          <div class="benchmark-header">
+            <p>ATE [m] / RTE [m/m]. Lower is better; × indicates failure.</p>
+            <div class="benchmark-tabs" role="tablist" aria-label="Benchmark dataset">
+              <button class="benchmark-tab is-active" id="benchmark-tab-inhouse" type="button" role="tab" aria-selected="true" aria-controls="benchmark-panel-inhouse" data-benchmark-target="inhouse">In-house</button>
+              <button class="benchmark-tab" id="benchmark-tab-garlileo" type="button" role="tab" aria-selected="false" aria-controls="benchmark-panel-garlileo" data-benchmark-target="garlileo">GaRLILEO</button>
+            </div>
+          </div>
+
+          <div class="benchmark-panel" id="benchmark-panel-inhouse" role="tabpanel" aria-labelledby="benchmark-tab-inhouse" data-benchmark-panel="inhouse">
+            <div class="table-scroll">
+              <table class="results benchmark-table">
+                <thead><tr><th>Method</th><th>BikeTunnel1</th><th>BikeTunnel2</th><th>Park1</th><th>Park2</th><th>Airfield1</th><th>Airfield2</th></tr></thead>
+                <tbody>
+                  <tr><td>GenZ-ICP</td><td>×</td><td>×</td><td>×</td><td>×</td><td>×</td><td>×</td></tr>
+                  <tr><td>FAST-LIO2</td><td>×</td><td>66.072 / 1.829</td><td>2.296 / 0.234</td><td>11.354 / 0.299</td><td>0.681 / 0.216</td><td>1.894 / 0.194</td></tr>
+                  <tr><td>SuperOdom</td><td>×</td><td>×</td><td>×</td><td>×</td><td>×</td><td>×</td></tr>
+                  <tr><td>DLIO</td><td>×</td><td>×</td><td>1.008 / 0.162</td><td>1.219 / 0.159</td><td>0.627 / 0.141</td><td>0.942 / 0.139</td></tr>
+                  <tr><td>RESPLE</td><td>×</td><td>×</td><td>×</td><td>×</td><td>0.611 / 0.115</td><td>0.464 / 0.110</td></tr>
+                  <tr><td>DR-LRIO</td><td>1.881 / 0.069</td><td>0.605 / 0.097</td><td>0.853 / 0.073</td><td>1.820 / 0.061</td><td>1.399 / 0.062</td><td>2.485 / 0.067</td></tr>
+                  <tr><td>GaRLIO</td><td>2.507 / 0.097</td><td>1.558 / 0.250</td><td>0.423 / 0.035</td><td>4.602 / 0.039</td><td>0.773 / 0.028</td><td>0.580 / 0.025</td></tr>
+                  <tr><td>Ours-LIO</td><td>×</td><td>12.352 / 0.546</td><td>×</td><td>×</td><td>9.627 / 0.180</td><td>0.127 / 0.027</td></tr>
+                  <tr class="ours-row"><td>Ours-RLIO</td><td>1.532 / 0.050</td><td>0.485 / 0.047</td><td>1.010 / 0.033</td><td>1.524 / 0.047</td><td>0.183 / 0.026</td><td>0.142 / 0.024</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="benchmark-panel" id="benchmark-panel-garlileo" role="tabpanel" aria-labelledby="benchmark-tab-garlileo" data-benchmark-panel="garlileo" hidden>
+            <div class="table-scroll">
+              <table class="results benchmark-table benchmark-table--wide">
+                <thead><tr><th>Method</th><th>Downstair</th><th>CorriLoop</th><th>BiCorridor</th><th>SlopeStair</th><th>Tunnel</th><th>Overpass</th><th>Quad</th></tr></thead>
+                <tbody>
+                  <tr><td>GenZ-ICP</td><td>1.208 / 0.055</td><td>0.728 / 0.063</td><td>0.569 / 0.057</td><td>1.966 / 0.050</td><td>0.891 / 0.040</td><td>1.346 / 0.062</td><td>4.239 / 0.042</td></tr>
+                  <tr><td>FAST-LIO2</td><td>0.459 / 0.036</td><td>0.336 / 0.049</td><td>0.767 / 0.040</td><td>0.867 / 0.030</td><td>0.525 / 0.031</td><td>1.067 / 0.036</td><td>3.616 / 0.040</td></tr>
+                  <tr><td>SuperOdom</td><td>1.011 / 0.057</td><td>2.927 / 0.219</td><td>4.372 / 0.376</td><td>1.531 / 0.043</td><td>3.579 / 0.132</td><td>1.286 / 0.061</td><td>3.665 / 0.044</td></tr>
+                  <tr><td>DLIO</td><td>0.887 / 0.059</td><td>0.284 / 0.064</td><td>×</td><td>0.694 / 0.065</td><td>0.791 / 0.055</td><td>0.954 / 0.067</td><td>3.464 / 0.062</td></tr>
+                  <tr><td>RESPLE</td><td>0.471 / 0.044</td><td>0.152 / 0.050</td><td>0.508 / 0.073</td><td>1.183 / 0.042</td><td>1.214 / 0.030</td><td>0.912 / 0.040</td><td>×</td></tr>
+                  <tr><td>DR-LRIO</td><td>0.565 / 0.045</td><td>0.444 / 0.053</td><td>1.051 / 0.039</td><td>2.242 / 0.044</td><td>1.700 / 0.037</td><td>0.621 / 0.046</td><td>2.786 / 0.044</td></tr>
+                  <tr><td>GaRLIO</td><td>0.225 / 0.147</td><td>0.223 / 0.055</td><td>×</td><td>5.040 / 0.745</td><td>0.506 / 0.117</td><td>×</td><td>×</td></tr>
+                  <tr><td>Ours-LIO</td><td>0.202 / 0.037</td><td>0.128 / 0.045</td><td>0.322 / 0.041</td><td>1.423 / 0.031</td><td>1.085 / 0.028</td><td>0.836 / 0.032</td><td>2.946 / 0.036</td></tr>
+                  <tr class="ours-row"><td>Ours-RLIO</td><td>0.213 / 0.035</td><td>0.139 / 0.044</td><td>0.279 / 0.036</td><td>1.374 / 0.029</td><td>1.017 / 0.028</td><td>0.813 / 0.034</td><td>2.374 / 0.036</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="section section--tint" id="BibTeX">
+      <div class="wrap wrap--narrow">
+        <div class="section-head reveal">
+          <h2 class="eyebrow">Citation</h2>
+        </div>
+        <div class="bibtex-card reveal">
+          <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard" type="button">
+            <i class="fas fa-copy"></i>
+            <span class="copy-text">Copy</span>
+          </button>
+          <pre id="bibtex-code"><code>@article{noh2026trailodom,
+  title={TRaIL-Odom: Tightly Coupled Continuous Time Radar-IMU-LiDAR Odometry with Adaptive Doppler Weighting},
+  author={Noh, Chiyun and Tuna, Turcan and Talbot, William and Hutter, Marco and Kneip, Laurent and Kim, Ayoung},
+  journal={IEEE Robotics and Automation Letters},
+  year={2026},
+  url={https://chiyunnoh.github.io/TRaIL-Odom/}
+}</code></pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot-grid">
+        <div>
+          <a class="nav-brand" href="#top">TRaIL-Odom</a>
+          <p>Tightly Coupled Continuous Time Radar-IMU-LiDAR Odometry with Adaptive Doppler Weighting, RA-L 2026.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+</body>
+</html>

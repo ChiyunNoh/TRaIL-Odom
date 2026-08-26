@@ -107,10 +107,6 @@ a:hover {
   min-width: 0;
 }
 
-.wrap--narrow {
-  max-width: 820px;
-}
-
 .progress-bar {
   position: fixed;
   top: 0;

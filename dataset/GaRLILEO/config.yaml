@@ -1,0 +1,68 @@
+Configor:
+  DataStream:
+    IMUTopic: /imu
+    IMUMsgType: SENSOR_IMU
+    RadarTopic: /ti_mmwave/radar_scan_pcl_0
+    RadarMsgType: CORAL
+    LidarTopic: /ouster/points
+    LidarMsgType: LIDAR_OUSTER
+    OutputPath: /tmp/trail_results/GaRLILEO
+    CalibParam:
+      SO3_RtoB: 
+        qx: 0
+        qy: 0
+        qz: 0
+        qw: 1
+      POS_RinB:
+        r0c0: 0.1
+        r1c0: 0
+        r2c0: 0.04
+      SO3_LtoB:
+        qx: -0.0014108
+        qy: -0.0041573
+        qz: -0.0097342
+        qw: 0.999943
+      POS_LinB:
+        r0c0: -0.185349
+        r1c0: 0.005689 
+        r2c0: 0.154050
+
+      TIME_OFFSET_RtoB: 0.0
+
+  Preprocess:      
+    n_scans: 32
+    timestamp_unit: 3
+    point_filter_num: 1
+    blind: 1
+    imu_acc_scale: 1.0
+
+  VoxelMap:
+    VoxelSize: 1.0
+    MaxRange: 100.0
+    MinRange: 0.0
+    MaxPointsPerVoxel: 20
+    save_map : true
+
+  Prior:
+    GravityDirection : -1.0 # when z axis of IMU is upward, use -1.0; when downward, use 1.0
+    GravityNorm: 9.8
+    SO3SplineKnotDist: 0.02
+    PoseSplineKnotDist: 0.02
+    AcceWeight: 17.68
+    AcceBiasRandomWalk: 4.0E-5
+    GyroWeight: 573.66
+    GyroBiasRandomWalk: 2.0E-5
+    RadarWeight: 50.00
+    CauchyLossForRadarFactor: 0.1
+    RotGravWeight: 10.00
+    GravityWeight: 100.00
+    LiDARWeight: 500.00
+
+  Preference:
+    LocalizationICPMaxIter : 4
+    IMUMsgQueueSize: 400
+    RadarMsgQueueSize: 200
+    LidarMsgQueueSize: 200
+    IncrementalOptRate: 50
+    OutputResultsWithTimeAligned: false
+    VisualizeVelocityInBody: false

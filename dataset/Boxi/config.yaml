@@ -1,0 +1,68 @@
+Configor:
+  DataStream:
+    IMUTopic: /gt_box/cpt7/offline_from_novatel_logs/imu
+    IMUMsgType: SENSOR_IMU
+    RadarTopic: /ti_mmwave/radar_scan_pcl_0
+    RadarMsgType: CORAL
+    LidarTopic: /gt_box/livox/lidar
+    LidarMsgType: LIDAR_MID360
+    OutputPath: /tmp/trail_results/Boxi
+    CalibParam:
+      SO3_RtoB:  
+        qx: 0.006726064
+        qy: -0.171056745
+        qz: 0.002576593
+        qw: 0.985234851
+      POS_RinB: 
+        r0c0: 0.371559154
+        r1c0: -0.040364706
+        r2c0: -0.152858587
+      SO3_LtoB:
+        qx: 0.007
+        qy: 0.000
+        qz: 0.002
+        qw: 1.000
+      POS_LinB: 
+        r0c0: 0.306
+        r1c0: -0.044
+        r2c0: -0.109
+
+      TIME_OFFSET_RtoB: 0.0
+
+  Preprocess:      
+    n_scans: 32
+    timestamp_unit: 3
+    point_filter_num: 1
+    blind: 1
+    imu_acc_scale: 1.0
+
+  VoxelMap:
+    VoxelSize: 1.0
+    MaxRange: 300.0
+    MinRange: 0.0
+    MaxPointsPerVoxel: 20
+    save_map : true
+
+  Prior:
+    GravityDirection : 1.0 # when z axis of IMU is upward, use -1.0; when downward, use 1.0
+    GravityNorm: 9.8
+    SO3SplineKnotDist: 0.02
+    PoseSplineKnotDist: 0.02
+    AcceWeight: 17.68
+    AcceBiasRandomWalk: 4.0E-4
+    GyroWeight: 573.66
+    GyroBiasRandomWalk: 2.0E-5
+    RadarWeight: 50.00
+    CauchyLossForRadarFactor: 0.1
+    RotGravWeight: 10.00
+    GravityWeight: 100.00
+    LiDARWeight: 500.00
+
+  Preference:
+    LocalizationICPMaxIter : 4
+    IMUMsgQueueSize: 400
+    RadarMsgQueueSize: 200
+    LidarMsgQueueSize: 200
+    IncrementalOptRate: 50
+    OutputResultsWithTimeAligned: false
+    VisualizeVelocityInBody: false

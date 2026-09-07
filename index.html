@@ -45,7 +45,7 @@
   <link rel="preload" href="static/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
-  <link rel="stylesheet" href="static/css/index.css?v=20260826-cleanup2">
+  <link rel="stylesheet" href="static/css/index.css?v=20260907-dataset-notes3">
 
   <script defer src="static/js/fontawesome.all.min.js"></script>
   <script defer src="static/js/index.js?v=20260826-cleanup2"></script>
@@ -286,6 +286,11 @@
             </a>
           </aside>
         </div>
+
+        <aside class="dataset-notes reveal" aria-labelledby="dataset-notes-title">
+          <h3 id="dataset-notes-title">Ground Truth &amp; Sensor Information</h3>
+          <p>Ground-truth poses are provided in <code class="dataset-code">(Seq)/*_jetson_ap20_robot.bag</code> in the <code class="dataset-code">prism</code> frame. The TF transforms for each sensor are available in the <code>tf_static</code> folder. For detailed information about the sensor system, please refer to the <a href="https://grand-tour.leggedrobotics.com/" target="_blank" rel="noopener">GrandTour Dataset website</a>.</p>
+        </aside>
 
         <div class="environment-cards">
           <article class="environment-card reveal" style="--d:0ms">

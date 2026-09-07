@@ -559,6 +559,7 @@ a:hover {
 }
 
 .figure-card,
+.dataset-notes,
 .step-card,
 .system-card,
 .video-card,
@@ -928,6 +929,36 @@ table.results tbody tr:hover {
 
 .dataset-summary .btn {
   align-self: flex-start;
+}
+
+.dataset-notes {
+  margin-top: 18px;
+  padding: 24px;
+}
+
+.dataset-notes h3 {
+  margin-bottom: 12px;
+  color: var(--ink-2);
+  font-family: var(--font-body);
+  font-size: .9rem;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.dataset-notes p {
+  color: var(--ink-3);
+  font-family: var(--font-body);
+  font-size: .9rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.dataset-notes code:not(.dataset-code) {
+  padding: 0;
+  background: transparent !important;
+  color: inherit !important;
+  font-family: inherit !important;
+  font-size: inherit;
 }
 
 .environment-cards {

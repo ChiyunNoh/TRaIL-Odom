@@ -973,15 +973,22 @@ namespace trail {
 
             LIN_VEL_BtoB0inB0_VEC.emplace_back(t, LIN_VEL_BtoB0inB0);
         }
+        if (LIN_VEL_BtoB0inB0_VEC.size() < 2) {
+            spdlog::warn("not enough velocity samples for gravity recovery.");
+            return;
+        }
         Eigen::Vector3d mean;
         Eigen::MatrixXd var;
         Eigen::MatrixXd matrix(LIN_VEL_BtoB0inB0_VEC.size(), 3);
+        for (int i = 0; i < static_cast<int>(LIN_VEL_BtoB0inB0_VEC.size()); ++i) {
+            matrix.row(i) = LIN_VEL_BtoB0inB0_VEC.at(i).second.transpose();
+        }
         auto estimator = Estimator::Create(configor, splines, gravity, ba, bg);
-        for (int i = 0; i < static_cast<int>(LIN_VEL_BtoB0inB0_VEC.size()) - 1; ++i) {
+        // retain the existing non-overlapping velocity pairs
+        for (int i = 0; i < static_cast<int>(LIN_VEL_BtoB0inB0_VEC.size()) - 1; i += 2) {
             int j = i + 1;
             const auto &[ti, vi] = LIN_VEL_BtoB0inB0_VEC.at(i);
             const auto &[tj, vj] = LIN_VEL_BtoB0inB0_VEC.at(j);
-            matrix.row(i++) = vi;
             auto [sIter, eIter] = ExtractRange(imuData, ti, tj);
             std::vector<std::pair<double, Eigen::Vector3d>> velData;
             for (auto iter = sIter; iter != eIter; ++iter) {

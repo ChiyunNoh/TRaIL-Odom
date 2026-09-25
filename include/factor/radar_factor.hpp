@@ -116,8 +116,8 @@ namespace trail {
     private:
         const CalibParamManager &parMagr;
         RadarTarget::Ptr target;
-        const Eigen::Vector3d &ref_vel;
-        const Eigen::MatrixXd &degenerate_basis_radar;
+        const Eigen::Vector3d ref_vel;
+        const Eigen::MatrixXd degenerate_basis_radar;
 
         double weight;
         double so3DtInv, poseDtInv;
@@ -177,7 +177,7 @@ namespace trail {
 
             const auto B = degenerate_basis_radar.template cast<T>(); //m *3 
 
-            const auto R_RtoB_T = parMagr.SO3_RtoB.matrix().template cast<T>().transpose();
+            const Eigen::Matrix<T, 3, 3> R_RtoB_T = parMagr.SO3_RtoB.matrix().template cast<T>().transpose();
 
             T v1 = -target->GetTargetXYZ().cast<T>().dot(
                     B.transpose() * B * R_RtoB_T * (LIN_VEL_RtoRefInCur - ref_vel.cast<T>())
